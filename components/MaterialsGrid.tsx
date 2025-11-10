@@ -1,14 +1,16 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen, Link as LinkIcon } from "lucide-react";
 
 export interface StudyMaterial {
   id: number;
   title: string;
-  description: string;
   subject: string;
-  topic: string;
-  image: string;
-  fileUrl: string;
+  type: string;
+  university: string;
+  uploader: string;
+  fileUrl?: string;
+  thumbnailUrl?: string;
 }
 
 export interface MaterialsGridProps {
@@ -17,42 +19,71 @@ export interface MaterialsGridProps {
 }
 
 const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials, viewMode }) => {
+  if (materials.length === 0) {
+    return (
+      <div className="text-center py-10 text-gray-500">
+        No materials available.
+      </div>
+    );
+  }
+
   return (
     <div
-      className={
+      className={`grid gap-6 transition-all duration-300 ${
         viewMode === "grid"
-          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          : "flex flex-col gap-4"
-      }
+          ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          : "grid-cols-1"
+      }`}
     >
       {materials.map((material) => (
         <Card
           key={material.id}
-          className="hover:shadow-lg transition-shadow duration-200 bg-[#111111] border border-neutral-800"
+          className="rounded-2xl shadow-sm border hover:shadow-md transition-shadow"
         >
-          <CardContent className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            {material.image && (
+          <CardContent className="p-4 flex items-start gap-4">
+            {/* Thumbnail */}
+            {material.thumbnailUrl ? (
               <img
-                src={material.image}
+                src={material.thumbnailUrl}
                 alt={material.title}
-                className={`${
-                  viewMode === "grid"
-                    ? "rounded-lg w-full h-40 object-cover"
-                    : "rounded-lg w-24 h-24 object-cover"
+                className={`rounded-xl object-cover ${
+                  viewMode === "grid" ? "w-full h-40" : "w-24 h-24"
                 }`}
               />
-            )}
-            <div>
-              <h3 className="text-lg font-semibold mb-1 text-white">{material.title}</h3>
-              <p className="text-sm text-gray-400 mb-2">{material.description}</p>
-              <a
-                href={material.fileUrl}
-                className="text-blue-400 hover:underline text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
+            ) : (
+              <div
+                className={`flex items-center justify-center bg-gray-100 rounded-xl text-gray-400 ${
+                  viewMode === "grid" ? "w-full h-40" : "w-24 h-24"
+                }`}
               >
-                View Material
-              </a>
+                <BookOpen className="w-8 h-8" />
+              </div>
+            )}
+
+            {/* Info */}
+            <div className="flex flex-col justify-between flex-1">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
+                  {material.title}
+                </h3>
+                <p className="text-sm text-gray-500">
+                  {material.subject} • {material.type}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  {material.university} — Uploaded by {material.uploader}
+                </p>
+              </div>
+
+              {material.fileUrl && (
+                <a
+                  href={material.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center text-sm text-blue-600 hover:underline"
+                >
+                  <LinkIcon className="w-4 h-4 mr-1" /> View Material
+                </a>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -62,4 +93,3 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials, viewMode }) =>
 };
 
 export default MaterialsGrid;
-

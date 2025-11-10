@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 text-center relative z-10">
         {/* Main Heading */}
         <h1 className="text-5xl md:text-7xl font-bold font-space-grotesk mb-6">
-          <span className="gradient-text">Free Study Materials</span>
+          <span className="gradient-text">Study Materials</span>
           <br />
           <span className="text-white">For Everyone</span>
         </h1>
