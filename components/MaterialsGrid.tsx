@@ -1,57 +1,52 @@
 import React from "react";
 import { StudyMaterial } from "@/types";
-import { FileText, Download, Calendar, BookOpen } from "lucide-react";
+import { FileText, Video, BookOpen } from "lucide-react";
 
 export interface MaterialsGridProps {
   materials: StudyMaterial[];
-  viewMode?: "grid" | "list"; // ✅ added this prop to fix build error
+  viewMode: "grid" | "list"; // ✅ Added this line
 }
 
-const MaterialsGrid: React.FC<MaterialsGridProps> = ({
-  materials,
-  viewMode = "grid",
-}) => {
+const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials, viewMode }) => {
   if (!materials || materials.length === 0) {
-    return (
-      <div className="text-center text-gray-400 py-12">
-        No materials found.
-      </div>
-    );
+    return <div className="text-center text-gray-400 py-10">No materials available</div>;
   }
 
+  // Pick icon by file type
+  const getIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "pdf":
+        return <FileText className="w-5 h-5 text-green-400" />;
+      case "video":
+        return <Video className="w-5 h-5 text-blue-400" />;
+      default:
+        return <BookOpen className="w-5 h-5 text-yellow-400" />;
+    }
+  };
+
+  // Layout selection
   if (viewMode === "list") {
     return (
       <div className="space-y-4">
-        {materials.map((material) => (
+        {materials.map((mat) => (
           <div
-            key={material.id}
-            className="bg-gray-900/60 border border-gray-800 rounded-xl p-4 flex justify-between items-center hover:bg-gray-900 transition-all"
+            key={mat.id}
+            className="flex items-center justify-between bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-green-500 transition-all"
           >
-            <div className="flex items-center gap-4">
-              <FileText className="text-green-500 w-6 h-6" />
+            <div className="flex items-center space-x-4">
+              {getIcon(mat.fileType)}
               <div>
-                <h3 className="font-semibold text-lg text-white">
-                  {material.title}
-                </h3>
-                <p className="text-gray-400 text-sm">{material.description}</p>
-                <div className="text-gray-500 text-xs mt-1 flex gap-4">
-                  <span className="flex items-center gap-1">
-                    <BookOpen className="w-3 h-3" /> {material.subject}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" /> Sem {material.semester}
-                  </span>
-                </div>
+                <h3 className="font-semibold text-lg">{mat.title}</h3>
+                <p className="text-gray-400 text-sm">{mat.description}</p>
               </div>
             </div>
             <a
-              href={material.link}
+              href={mat.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm"
+              className="text-green-400 hover:text-green-300 text-sm underline"
             >
-              <Download className="w-4 h-4" />
-              Download
+              View
             </a>
           </div>
         ))}
@@ -59,42 +54,29 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({
     );
   }
 
-  // GRID VIEW
+  // Default: Grid view
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {materials.map((material) => (
+      {materials.map((mat) => (
         <div
-          key={material.id}
-          className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 hover:bg-gray-900 transition-all group"
+          key={mat.id}
+          className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-500 transition-all"
         >
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <FileText className="text-green-500 w-6 h-6" />
-              <div>
-                <h3 className="font-semibold text-lg text-white group-hover:text-green-400 transition-colors">
-                  {material.title}
-                </h3>
-                <p className="text-gray-400 text-sm">{material.subject}</p>
-              </div>
-            </div>
-            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-lg">
-              Sem {material.semester}
-            </span>
+          <div className="flex items-center space-x-2 mb-3">
+            {getIcon(mat.fileType)}
+            <span className="text-sm text-gray-400">{mat.fileType}</span>
           </div>
-
-          <p className="text-gray-400 text-sm mt-4 line-clamp-2">
-            {material.description}
-          </p>
-
-          <div className="flex justify-end mt-6">
+          <h3 className="font-semibold text-xl mb-2">{mat.title}</h3>
+          <p className="text-gray-400 text-sm mb-4 line-clamp-3">{mat.description}</p>
+          <div className="flex items-center justify-between text-sm text-gray-500">
+            <span>{mat.category}</span>
             <a
-              href={material.link}
+              href={mat.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm"
+              className="text-green-400 hover:text-green-300 underline"
             >
-              <Download className="w-4 h-4" />
-              Download
+              View
             </a>
           </div>
         </div>
