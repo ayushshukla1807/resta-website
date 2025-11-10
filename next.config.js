@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
+  reactStrictMode: true,
+  images: {
+    domains: ['localhost', 'res.cloudinary.com'],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

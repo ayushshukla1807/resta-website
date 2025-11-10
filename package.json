@@ -1,8 +1,7 @@
 {
   "name": "resta-website",
   "version": "1.0.0",
-  "description": "ReSta - Your Ultimate Study Resources Platform",
-  "type": "module",  
+  "description": "ReSta - Your Ultimate Study Resources Platform", 
   "private": true,
   "scripts": {
     "dev": "next dev",
