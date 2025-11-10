@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Link as LinkIcon } from "lucide-react";
 
+// Define StudyMaterial type
 export interface StudyMaterial {
   id: number;
   title: string;
@@ -13,13 +14,14 @@ export interface StudyMaterial {
   thumbnailUrl?: string;
 }
 
+// ✅ Include viewMode here
 export interface MaterialsGridProps {
   materials: StudyMaterial[];
   viewMode: "grid" | "list";
 }
 
 const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials, viewMode }) => {
-  if (materials.length === 0) {
+  if (!materials || materials.length === 0) {
     return (
       <div className="text-center py-10 text-gray-500">
         No materials available.
@@ -40,7 +42,11 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials, viewMode }) =>
           key={material.id}
           className="rounded-2xl shadow-sm border hover:shadow-md transition-shadow"
         >
-          <CardContent className="p-4 flex items-start gap-4">
+          <CardContent
+            className={`p-4 flex ${
+              viewMode === "grid" ? "flex-col" : "flex-row items-center"
+            } gap-4`}
+          >
             {/* Thumbnail */}
             {material.thumbnailUrl ? (
               <img
