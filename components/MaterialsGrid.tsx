@@ -1,104 +1,101 @@
-import React from 'react';
-import { StudyMaterial } from '@/types';
-import { Download, Star, Eye, Calendar, User, FileText } from 'lucide-react';
+import React from "react";
+import { StudyMaterial } from "@/types";
+import { FileText, Download, Calendar, BookOpen } from "lucide-react";
 
-interface MaterialsGridProps {
+export interface MaterialsGridProps {
   materials: StudyMaterial[];
+  viewMode?: "grid" | "list"; // ✅ added this prop to fix build error
 }
 
-// Fixed date formatting function
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  });
-};
+const MaterialsGrid: React.FC<MaterialsGridProps> = ({
+  materials,
+  viewMode = "grid",
+}) => {
+  if (!materials || materials.length === 0) {
+    return (
+      <div className="text-center text-gray-400 py-12">
+        No materials found.
+      </div>
+    );
+  }
 
-const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
+  if (viewMode === "list") {
+    return (
+      <div className="space-y-4">
+        {materials.map((material) => (
+          <div
+            key={material.id}
+            className="bg-gray-900/60 border border-gray-800 rounded-xl p-4 flex justify-between items-center hover:bg-gray-900 transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <FileText className="text-green-500 w-6 h-6" />
+              <div>
+                <h3 className="font-semibold text-lg text-white">
+                  {material.title}
+                </h3>
+                <p className="text-gray-400 text-sm">{material.description}</p>
+                <div className="text-gray-500 text-xs mt-1 flex gap-4">
+                  <span className="flex items-center gap-1">
+                    <BookOpen className="w-3 h-3" /> {material.subject}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" /> Sem {material.semester}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <a
+              href={material.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm"
+            >
+              <Download className="w-4 h-4" />
+              Download
+            </a>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // GRID VIEW
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {materials.map((material) => (
-
-        // In MaterialsGrid.tsx, update the card container:
         <div
           key={material.id}
-          className="premium-card glass rounded-xl p-6 hover:shadow-2xl transition-all duration-300 border border-gray-800 hover:border-green-500/50 group glow-effect"
+          className="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 hover:bg-gray-900 transition-all group"
         >
-
-          {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <FileText className="text-green-500 w-6 h-6" />
               <div>
-                <span className="text-xs font-medium text-gray-400 bg-gray-800 px-2 py-1 rounded">
-                  {material.fileType}
-                </span>
-                <span className="text-xs font-medium text-gray-400 bg-gray-800 px-2 py-1 rounded ml-1">
-                  {material.level}
-                </span>
+                <h3 className="font-semibold text-lg text-white group-hover:text-green-400 transition-colors">
+                  {material.title}
+                </h3>
+                <p className="text-gray-400 text-sm">{material.subject}</p>
               </div>
             </div>
-            <div className="flex items-center space-x-1 text-yellow-500">
-              <Star className="w-4 h-4 fill-current" />
-              <span className="text-sm font-medium">{material.rating}</span>
-            </div>
+            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-lg">
+              Sem {material.semester}
+            </span>
           </div>
 
-          {/* Title and Description */}
-          <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2 group-hover:text-green-400 transition-colors">
-            {material.title}
-          </h3>
-          <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+          <p className="text-gray-400 text-sm mt-4 line-clamp-2">
             {material.description}
           </p>
 
-          {/* Meta Information */}
-          <div className="space-y-2 mb-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-400">
-              <User className="w-4 h-4" />
-              <span>{material.author}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-400">
-              <Calendar className="w-4 h-4" />
-              {/* FIXED DATE FORMATTING */}
-              <span suppressHydrationWarning>{formatDate(material.uploadDate)}</span>
-            </div>
-          </div>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1 mb-4">
-            {material.tags.slice(0, 3).map((tag, index) => (
-              <span
-                key={index}
-                className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-800">
-            <div className="flex items-center space-x-4 text-sm text-gray-400">
-              <div className="flex items-center space-x-1">
-                <Download className="w-4 h-4" />
-                <span>{material.downloadCount}</span>
-              </div>
-              {material.pages && (
-                <div className="flex items-center space-x-1">
-                  <FileText className="w-4 h-4" />
-                  <span>{material.pages} pages</span>
-                </div>
-              )}
-            </div>
-            <button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+          <div className="flex justify-end mt-6">
+            <a
+              href={material.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm"
+            >
               <Download className="w-4 h-4" />
-              <span>Download</span>
-            </button>
+              Download
+            </a>
           </div>
         </div>
       ))}
