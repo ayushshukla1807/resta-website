@@ -1,25 +1,49 @@
-import React, { useState, useMemo } from 'react';
-import Head from 'next/head';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import MaterialsGrid from '@/components/MaterialsGrid';
-import QuickAccess from '@/components/QuickAccess';
-import { studyMaterials, categories } from '@/data/mockData';
-import { Search, Filter, Grid, List } from 'lucide-react';
-import { StudyMaterial, SearchFilters } from '@/types';
+// pages/materials/index.tsx
+import React, { useState, useMemo } from "react";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import MaterialsGrid from "@/components/MaterialsGrid";
+import QuickAccess from "@/components/QuickAccess";
+import { studyMaterials, categories } from "@/data/mockData";
+import { Search, Filter, Grid, List } from "lucide-react";
+import { StudyMaterial, SearchFilters } from "@/types";
+
+/**
+ * If these components are client-only or not yet created, we dynamically import them
+ * with SSR disabled so they won't cause server-render errors.
+ * If you have the actual component files and they work with SSR, replace dynamic imports
+ * with normal imports:
+ *   import LiveActivity from "@/components/LiveActivity";
+ */
+const LiveActivity = dynamic(() => import("@/components/LiveActivity").catch(() => () => null), {
+  ssr: false,
+});
+const ProgressTracker = dynamic(() => import("@/components/ProgressTracker").catch(() => () => null), {
+  ssr: false,
+});
+const Recommendations = dynamic(() => import("@/components/Recommendations").catch(() => () => null), {
+  ssr: false,
+});
 
 const MaterialsPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState<SearchFilters>({});
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchTerm, setSearchTerm] = useState("");
+  // If SearchFilters has all optional properties, this is fine.
+  // If TS complains, use `useState<SearchFilters>({} as SearchFilters);`
+  const [filters, setFilters] = useState<SearchFilters>({} as SearchFilters);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredMaterials = useMemo(() => {
-    return studyMaterials.filter(material => {
+    return studyMaterials.filter((material) => {
       // Search term filter
-      if (searchTerm && !material.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      if (
+        searchTerm &&
+        !material.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
         !material.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        !material.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))) {
+        !material.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+      ) {
         return false;
       }
 
@@ -42,8 +66,8 @@ const MaterialsPage: React.FC = () => {
     });
   }, [searchTerm, filters]);
 
-  const uniqueLevels = Array.from(new Set(studyMaterials.map(m => m.level)));
-  const uniqueFileTypes = Array.from(new Set(studyMaterials.map(m => m.fileType)));
+  const uniqueLevels = Array.from(new Set(studyMaterials.map((m) => m.level)));
+  const uniqueFileTypes = Array.from(new Set(studyMaterials.map((m) => m.fileType)));
 
   return (
     <>
@@ -88,20 +112,20 @@ const MaterialsPage: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2 bg-gray-900 rounded-lg p-1">
                     <button
-                      onClick={() => setViewMode('grid')}
-                      className={`p-2 rounded ${viewMode === 'grid'
-                          ? 'bg-green-600 text-white'
-                          : 'text-gray-400 hover:text-white'
-                        }`}
+                      onClick={() => setViewMode("grid")}
+                      aria-label="Grid view"
+                      className={`p-2 rounded ${
+                        viewMode === "grid" ? "bg-green-600 text-white" : "text-gray-400 hover:text-white"
+                      }`}
                     >
                       <Grid className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => setViewMode('list')}
-                      className={`p-2 rounded ${viewMode === 'list'
-                          ? 'bg-green-600 text-white'
-                          : 'text-gray-400 hover:text-white'
-                        }`}
+                      onClick={() => setViewMode("list")}
+                      aria-label="List view"
+                      className={`p-2 rounded ${
+                        viewMode === "list" ? "bg-green-600 text-white" : "text-gray-400 hover:text-white"
+                      }`}
                     >
                       <List className="w-4 h-4" />
                     </button>
@@ -109,10 +133,11 @@ const MaterialsPage: React.FC = () => {
 
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center space-x-2 px-4 py-3 rounded-lg border transition-colors ${showFilters
-                        ? 'border-green-500 text-green-500 bg-green-500/10'
-                        : 'border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white'
-                      }`}
+                    className={`flex items-center space-x-2 px-4 py-3 rounded-lg border transition-colors ${
+                      showFilters
+                        ? "border-green-500 text-green-500 bg-green-500/10"
+                        : "border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white"
+                    }`}
                   >
                     <Filter className="w-4 h-4" />
                     <span>Filters</span>
@@ -126,19 +151,19 @@ const MaterialsPage: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Category Filter */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">
-                        Category
-                      </label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">Category</label>
                       <select
-                        value={filters.category || ''}
-                        onChange={(e) => setFilters(prev => ({
-                          ...prev,
-                          category: e.target.value || undefined
-                        }))}
+                        value={filters.category || ""}
+                        onChange={(e) =>
+                          setFilters((prev) => ({
+                            ...prev,
+                            category: e.target.value || undefined,
+                          }))
+                        }
                         className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
                       >
                         <option value="">All Categories</option>
-                        {categories.map(category => (
+                        {categories.map((category) => (
                           <option key={category.id} value={category.name}>
                             {category.name}
                           </option>
@@ -148,19 +173,19 @@ const MaterialsPage: React.FC = () => {
 
                     {/* Level Filter */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">
-                        Level
-                      </label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">Level</label>
                       <select
-                        value={filters.level || ''}
-                        onChange={(e) => setFilters(prev => ({
-                          ...prev,
-                          level: e.target.value || undefined
-                        }))}
+                        value={filters.level || ""}
+                        onChange={(e) =>
+                          setFilters((prev) => ({
+                            ...prev,
+                            level: e.target.value || undefined,
+                          }))
+                        }
                         className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
                       >
                         <option value="">All Levels</option>
-                        {uniqueLevels.map(level => (
+                        {uniqueLevels.map((level) => (
                           <option key={level} value={level}>
                             {level}
                           </option>
@@ -170,19 +195,19 @@ const MaterialsPage: React.FC = () => {
 
                     {/* File Type Filter */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">
-                        File Type
-                      </label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">File Type</label>
                       <select
-                        value={filters.fileType || ''}
-                        onChange={(e) => setFilters(prev => ({
-                          ...prev,
-                          fileType: e.target.value || undefined
-                        }))}
+                        value={filters.fileType || ""}
+                        onChange={(e) =>
+                          setFilters((prev) => ({
+                            ...prev,
+                            fileType: e.target.value || undefined,
+                          }))
+                        }
                         className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
                       >
                         <option value="">All File Types</option>
-                        {uniqueFileTypes.map(type => (
+                        {uniqueFileTypes.map((type) => (
                           <option key={type} value={type}>
                             {type}
                           </option>
@@ -194,7 +219,7 @@ const MaterialsPage: React.FC = () => {
                   {/* Clear Filters */}
                   <div className="mt-4 flex justify-end">
                     <button
-                      onClick={() => setFilters({})}
+                      onClick={() => setFilters({} as SearchFilters)}
                       className="text-gray-400 hover:text-white text-sm underline"
                     >
                       Clear all filters
@@ -206,9 +231,12 @@ const MaterialsPage: React.FC = () => {
 
             {/* Main Content Grid with Sidebar */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Quick Access Sidebar */}
-              <div className="lg:col-span-1">
+              {/* Quick Access Sidebar / Premium Sidebar Layout */}
+              <div className="lg:col-span-1 space-y-6">
                 <QuickAccess />
+                <LiveActivity />
+                <ProgressTracker />
+                <Recommendations />
               </div>
 
               {/* Main Content */}
@@ -224,18 +252,16 @@ const MaterialsPage: React.FC = () => {
                 </div>
 
                 {/* Materials Grid */}
-                <MaterialsGrid materials={filteredMaterials} />
+                <MaterialsGrid materials={filteredMaterials} viewMode={viewMode} />
 
                 {/* No Results */}
                 {filteredMaterials.length === 0 && (
                   <div className="text-center py-12">
-                    <div className="text-gray-400 text-lg mb-4">
-                      No materials found matching your criteria
-                    </div>
+                    <div className="text-gray-400 text-lg mb-4">No materials found matching your criteria</div>
                     <button
                       onClick={() => {
-                        setSearchTerm('');
-                        setFilters({});
+                        setSearchTerm("");
+                        setFilters({} as SearchFilters);
                       }}
                       className="text-green-400 hover:text-green-300 underline"
                     >

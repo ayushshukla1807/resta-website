@@ -117,3 +117,48 @@
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+/* Add these to your existing CSS */
+.premium-card {
+  transform: perspective(1000px) rotateX(0) rotateY(0);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(34, 197, 94, 0.1);
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #22c55e, #3b82f6, #8b5cf6, #ec4899);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glow-effect:hover::before {
+  opacity: 1;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% { filter: hue-rotate(0deg) blur(10px); }
+  100% { filter: hue-rotate(360deg) blur(10px); }
+}
+
+/* Particle background effect */
+.particles-bg {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+}

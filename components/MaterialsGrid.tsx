@@ -20,10 +20,13 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {materials.map((material) => (
+
+        // In MaterialsGrid.tsx, update the card container:
         <div
           key={material.id}
-          className="glass rounded-xl p-6 hover:shadow-2xl transition-all duration-300 border border-gray-800 hover:border-gray-600 group"
+          className="premium-card glass rounded-xl p-6 hover:shadow-2xl transition-all duration-300 border border-gray-800 hover:border-green-500/50 group glow-effect"
         >
+
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center space-x-2">

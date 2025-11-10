@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Search, Download, Star, Users } from 'lucide-react';
@@ -24,7 +26,7 @@ const Hero: React.FC = () => {
           competitive tests, and academic success. No registration required.
         </p>
 
-        {/* Stats */}
+        {/* Stats Section */}
         <div className="flex flex-wrap justify-center gap-8 mb-12">
           <div className="flex items-center space-x-2 text-gray-300">
             <Download className="w-5 h-5 text-green-500" />
@@ -33,7 +35,7 @@ const Hero: React.FC = () => {
           </div>
           <div className="flex items-center space-x-2 text-gray-300">
             <Star className="w-5 h-5 text-yellow-500" />
-            <span className="text-lg font-semibold">4.8/5</span>
+            <span className="text-lg font-semibold">4.8</span>
             <span className="text-gray-400">Rating</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-300">
@@ -42,6 +44,7 @@ const Hero: React.FC = () => {
             <span className="text-gray-400">Students</span>
           </div>
         </div>
+
         {/* CSE Specific Stats */}
         <div className="flex flex-wrap justify-center gap-6 mb-8">
           <div className="text-center">
