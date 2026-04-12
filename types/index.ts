@@ -1,23 +1,15 @@
+// /types/index.ts
 export interface StudyMaterial {
-  id: string;
+  id: number;
   title: string;
-  description: string;
-  category: string;
   subject: string;
-  fileType: string;
-  fileSize: string;
-  downloadUrl: string;
-  previewUrl?: string;
-  uploadDate: string;
-  rating: number;
-  downloadCount: number;
-  tags: string[];
-  author: string;
-  pages?: number;
-  language: string;
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
-  thumbnail?: string;
+  type: string;
+  university: string;
+  uploader: string;
+  fileUrl?: string;
+  thumbnailUrl?: string;
 }
+
 
 export interface Category {
   id: string;

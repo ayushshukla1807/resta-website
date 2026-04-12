@@ -1,8 +1,30 @@
-'use client';
-
-import React from 'react';
 import Link from 'next/link';
 import { Search, Download, Star, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+
+const AnimatedCounter: React.FC<{ target: number; duration: number; suffix?: string }> = ({
+  target, duration, suffix = ''
+}) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const increment = target / (duration / 10);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 10);
+
+    return () => clearInterval(timer);
+  }, [target, duration]);
+
+  return <span>{count.toLocaleString()}{suffix}</span>;
+};
 
 const Hero: React.FC = () => {
   return (
@@ -22,25 +44,31 @@ const Hero: React.FC = () => {
 
         {/* Subtitle */}
         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-          Access thousands of free study materials, books, and resources for government exams,
+          Access thousands of study materials, books, and resources for government exams,
           competitive tests, and academic success. No registration required.
         </p>
 
-        {/* Stats Section */}
+        {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mb-12">
           <div className="flex items-center space-x-2 text-gray-300">
             <Download className="w-5 h-5 text-green-500" />
-            <span className="text-lg font-semibold">10,000+</span>
+            <span className="text-lg font-semibold">
+              <AnimatedCounter target={10000} duration={2000} />+
+            </span>
             <span className="text-gray-400">Downloads</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-300">
             <Star className="w-5 h-5 text-yellow-500" />
-            <span className="text-lg font-semibold">4.8</span>
+            <span className="text-lg font-semibold">
+              <AnimatedCounter target={4.8} duration={1500} />
+            </span>
             <span className="text-gray-400">Rating</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-300">
             <Users className="w-5 h-5 text-blue-500" />
-            <span className="text-lg font-semibold">50,000+</span>
+            <span className="text-lg font-semibold">
+              <AnimatedCounter target={50000} duration={2500} />+
+            </span>
             <span className="text-gray-400">Students</span>
           </div>
         </div>

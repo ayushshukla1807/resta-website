@@ -23,7 +23,7 @@ const About: React.FC = () => {
                 About <span className="gradient-text">ReSta</span>
               </h1>
               <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Empowering students worldwide with free, high-quality educational resources
+                Empowering students worldwide with high-quality educational resources
               </p>
             </div>
 
@@ -36,7 +36,7 @@ const About: React.FC = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">Our Mission</h3>
                   <p className="text-gray-400">
-                    To provide free, accessible education to every student regardless of their background
+                    To provide high-quality, accessible education to every student regardless of their background
                   </p>
                 </div>
                 <div className="text-center">

@@ -63,7 +63,7 @@ const MaterialsPage: React.FC = () => {
                 Study <span className="gradient-text">Materials</span>
               </h1>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Discover {studyMaterials.length}+ free study materials across various categories and subjects
+                Discover {studyMaterials.length}+ study materials across various categories and subjects
               </p>
             </div>
 
@@ -90,8 +90,8 @@ const MaterialsPage: React.FC = () => {
                     <button
                       onClick={() => setViewMode('grid')}
                       className={`p-2 rounded ${viewMode === 'grid'
-                        ? 'bg-green-600 text-white'
-                        : 'text-gray-400 hover:text-white'
+                          ? 'bg-green-600 text-white'
+                          : 'text-gray-400 hover:text-white'
                         }`}
                     >
                       <Grid className="w-4 h-4" />
@@ -99,8 +99,8 @@ const MaterialsPage: React.FC = () => {
                     <button
                       onClick={() => setViewMode('list')}
                       className={`p-2 rounded ${viewMode === 'list'
-                        ? 'bg-green-600 text-white'
-                        : 'text-gray-400 hover:text-white'
+                          ? 'bg-green-600 text-white'
+                          : 'text-gray-400 hover:text-white'
                         }`}
                     >
                       <List className="w-4 h-4" />
@@ -110,8 +110,8 @@ const MaterialsPage: React.FC = () => {
                   <button
                     onClick={() => setShowFilters(!showFilters)}
                     className={`flex items-center space-x-2 px-4 py-3 rounded-lg border transition-colors ${showFilters
-                      ? 'border-green-500 text-green-500 bg-green-500/10'
-                      : 'border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white'
+                        ? 'border-green-500 text-green-500 bg-green-500/10'
+                        : 'border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white'
                       }`}
                   >
                     <Filter className="w-4 h-4" />
@@ -207,10 +207,10 @@ const MaterialsPage: React.FC = () => {
             {/* Main Content Grid with Sidebar */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               {/* Quick Access Sidebar */}
-              {/* Premium Sidebar Layout */}
-              <div className="lg:col-span-1 space-y-6">
+              <div className="lg:col-span-1">
                 <QuickAccess />
               </div>
+
               {/* Main Content */}
               <div className="lg:col-span-3">
                 {/* Results Count */}
