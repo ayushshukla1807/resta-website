@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { StudyMaterial } from '@/types';
 import { Download, Star, Calendar, User, FileText } from 'lucide-react';
@@ -15,11 +16,38 @@ const formatDate = (dateString: string) => {
   });
 };
 
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+};
+
 const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
       {materials.map((material) => (
-        <div
+        <motion.div
+          variants={itemVariants}
           key={material.id}
           className="premium-card glass rounded-xl p-6 hover:shadow-2xl transition-all duration-300 border border-gray-800 hover:border-green-500/50 group glow-effect"
         >
@@ -95,9 +123,9 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
               <span>Download</span>
             </button>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

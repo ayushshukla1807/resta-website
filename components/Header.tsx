@@ -13,7 +13,7 @@ const Header: React.FC = () => {
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold font-space-grotesk gradient-text">
-              ReSta
+              StudyHub
             </span>
           </Link>
 

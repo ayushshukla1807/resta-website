@@ -10,12 +10,12 @@
 ---
 
 ## 🔗 Live Platform
-🌐 **Visit Live:** [resta-website.vercel.app](https://resta-website.vercel.app)
+🌐 **Visit Live:** [studyhub-website-ayush.netlify.app](https://studyhub-website-ayush.netlify.app)
 
 ---
 
 ## 📚 About Study Hub
-Study Hub (internally known as ReSta) is a comprehensive digital repository for engineering students. It simplifies academic discovery by centralizing high-quality resources across major domains:
+StudyHub is a comprehensive digital intelligent repository for engineering students. It simplifies academic discovery by centralizing high-quality resources across major domains:
 - **Data Structures & Algorithms (DSA)**
 - **Database Management Systems (DBMS)**
 - **Operating Systems (OS)**
@@ -61,8 +61,8 @@ styles/                 # Tailwind global configurations
 
 ```bash
 # Clone the repository
-git clone https://github.com/ayushshukla1807/resta-website.git
-cd resta-website
+git clone https://github.com/ayushshukla1807/studyhub-website.git
+cd studyhub-website
 
 # Install & Run
 npm install

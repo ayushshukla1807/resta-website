@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold font-space-grotesk gradient-text">
-                ReSta
+                StudyHub
               </span>
             </Link>
             <p className="text-gray-400 mb-4 max-w-md">
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               Empowering students and learners worldwide with quality educational resources.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://github.com/ayushshukla1807/studyhub-website" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Github className="w-5 h-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 ReSta. All rights reserved.
+            © 2026 StudyHub. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 md:mt-0">
             Made with ❤️ for students worldwide
