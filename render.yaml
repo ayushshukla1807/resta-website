@@ -1,0 +1,26 @@
+services:
+  # Next.js Full Stack Frontend
+  - type: web
+    name: studyhub-frontend
+    env: node
+    buildCommand: npm ci && npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        value: file:./dev.db
+      - key: NEXTAUTH_URL
+        generateValue: true
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+
+  # Python FastAPI ML Engine
+  - type: web
+    name: studyhub-ml-engine
+    env: python
+    buildCommand: cd ml-engine && pip install -r requirements.txt
+    startCommand: cd ml-engine && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
