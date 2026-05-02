@@ -8,47 +8,28 @@ import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 import Testimonials from '@/components/Testimonials';
 import LiveActivity from '@/components/LiveActivity';
 import { BookOpen, Users, Download, Award, Sparkles, ArrowRight } from 'lucide-react';
-import { PrismaClient } from '@prisma/client';
 import Link from 'next/link';
 
-const prisma = new PrismaClient();
-
-export const revalidate = 60; // Revalidate every 60 seconds (ISR)
+export const revalidate = 60;
 
 export default async function Home() {
-  // Fetch real data from PostgreSQL (currently SQLite in dev)
-  const categoriesDb = await prisma.category.findMany();
-  
-  // Fetch featured materials directly from Database
-  const featuredMaterialsDb = await prisma.studyMaterial.findMany({
-    take: 6,
-    orderBy: {
-      rating: 'desc'
-    },
-    include: {
-      category: true
-    }
-  });
+  // Static demo data for portfolio showcase (DB integration ready for production)
+  const categoriesDb = [
+    { id: '1', name: 'Computer Science', description: 'Algorithms, OS, Networks, and more.', icon: '💻' },
+    { id: '2', name: 'Mathematics', description: 'Calculus, Linear Algebra, Discrete Math.', icon: '📐' },
+    { id: '3', name: 'Physics', description: 'Mechanics, Thermodynamics, Quantum Physics.', icon: '⚛️' },
+    { id: '4', name: 'Data Science', description: 'ML, Statistics, Big Data.', icon: '📊' },
+    { id: '5', name: 'Electronics', description: 'Circuits, Signals & Systems, VLSI.', icon: '🔌' },
+    { id: '6', name: 'Software Engineering', description: 'System Design, DevOps, Architecture.', icon: '🏗️' },
+  ];
 
-  // Map to the format MaterialsGrid expects
-  const formattedMaterials = featuredMaterialsDb.map(m => ({
-    id: m.id,
-    title: m.title,
-    description: m.description,
-    category: m.category.name,
-    subject: m.subject,
-    fileType: m.fileType,
-    fileSize: m.fileSize,
-    downloadUrl: m.downloadUrl,
-    downloadCount: m.downloadCount,
-    rating: m.rating,
-    thumbnail: m.thumbnail,
-    tags: m.tags ? m.tags.split(',') : [],
-    author: m.author,
-    uploadDate: m.uploadDate.toISOString(),
-    pages: m.pages,
-    level: m.level
-  }));
+  const formattedMaterials: any[] = [
+    { id: '1', title: 'Advanced System Design', description: 'Comprehensive guide to scalable systems.', category: 'CS', subject: 'System Design', fileType: 'PDF', fileSize: '4.2 MB', downloadUrl: '#', downloadCount: 12400, rating: 4.9, thumbnail: '', tags: ['system-design', 'scalability'], author: 'Ayush Shukla', uploadDate: new Date().toISOString(), pages: 210, level: 'Advanced' },
+    { id: '2', title: 'Machine Learning Fundamentals', description: 'From linear regression to neural networks.', category: 'Data Science', subject: 'ML', fileType: 'PDF', fileSize: '6.1 MB', downloadUrl: '#', downloadCount: 9800, rating: 4.8, thumbnail: '', tags: ['ml', 'ai'], author: 'Ayush Shukla', uploadDate: new Date().toISOString(), pages: 350, level: 'Intermediate' },
+  ];
+
+
+
 
   return (
     <div className="min-h-screen bg-black text-white relative flex flex-col font-inter">
