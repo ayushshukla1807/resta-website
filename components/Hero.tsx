@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Sparkles, BookOpen, BrainCircuit } from 'lucide-react';
 
 const Hero = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   return (
     <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black isolation-auto">
       {/* Dynamic Background Elements */}
@@ -57,18 +58,29 @@ const Hero = () => {
             className="w-full max-w-2xl relative mt-8 group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
-            <div className="relative flex items-center bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-2 shadow-2xl">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
+              }}
+              className="relative flex items-center bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-2 shadow-2xl"
+            >
               <Search className="w-6 h-6 text-gray-400 ml-4" />
               <input 
                 type="text" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Ask the AI: 'Explain deadlock prevention with diagrams...'"
                 className="w-full bg-transparent border-none text-white placeholder-gray-500 px-4 py-4 outline-none focus:ring-0 text-lg"
               />
-              <button className="bg-white text-black px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors flex items-center gap-2">
+              <button 
+                type="submit"
+                className="bg-white text-black px-8 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors flex items-center gap-2"
+              >
                 <BrainCircuit className="w-5 h-5" />
                 Search
               </button>
-            </div>
+            </form>
           </motion.div>
 
           <motion.div 

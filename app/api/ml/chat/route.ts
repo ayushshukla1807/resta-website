@@ -1,0 +1,16 @@
+import { NextResponse } from 'next/server';
+import { fetchML } from '@/lib/ml';
+
+export async function POST(req: Request) {
+  try {
+    const { query, history = [] } = await req.json();
+    if (!query) {
+      return NextResponse.json({ error: 'Query is required' }, { status: 400 });
+    }
+
+    const results = await fetchML('/api/ml/chat', { query, history });
+    return NextResponse.json(results);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

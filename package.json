@@ -41,11 +41,11 @@
     "typescript": "^5.9.3"
   },
   "keywords": [
-    "resta",
-    "study",
-    "resources",
-    "education",
-    "materials"
+    "studyhub",
+    "ai-academic",
+    "rag",
+    "semantic-search",
+    "engineering-resources"
   ],
   "author": "StudyHub Team",
   "license": "MIT"

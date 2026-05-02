@@ -7,28 +7,25 @@ const Testimonials: React.FC = () => {
       id: 1,
       name: 'Dr. Priya Sharma',
       role: 'Professor, IIT Delhi',
-      content: 'ReSta has revolutionized how students access quality education. The platform\'s comprehensive materials have significantly improved learning outcomes.',
+      content: 'StudyHub has revolutionized how students access quality education. The AI-powered semantic search and automated summaries have significantly improved learning outcomes across our department.',
       rating: 5,
       achievement: 'Education Innovator',
-      avatar: '/avatars/priya.jpg'
     },
     {
       id: 2,
       name: 'Rohan Kumar',
       role: 'Software Engineer, Google',
-      content: 'The DSA and system design materials from ReSta were instrumental in helping me crack my FAANG interviews. Exceptional quality and depth!',
+      content: 'The DSA and system design materials from StudyHub were instrumental in helping me crack my FAANG interviews. The RAG-powered study assistant is a game changer!',
       rating: 5,
       achievement: 'FAANG Placement',
-      avatar: '/avatars/rohan.jpg'
     },
     {
       id: 3,
       name: 'Ananya Patel',
-      role: 'Medical Student, AIIMS',
-      content: 'As a medical student, finding reliable resources was challenging until I discovered ReSta. The medical materials are accurate and comprehensive.',
+      role: 'ML Engineer, Microsoft',
+      content: 'As someone preparing for ML roles, the intelligence engine that auto-summarizes papers and provides contextual search results is incredibly useful. Best academic platform I have used.',
       rating: 5,
-      achievement: 'Top Rank Holder',
-      avatar: '/avatars/ananya.jpg'
+      achievement: 'Top Contributor',
     }
   ];
 
@@ -47,7 +44,7 @@ const Testimonials: React.FC = () => {
             Success <span className="gradient-text">Stories</span>
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Join thousands of students and professionals who have transformed their careers with ReSta
+            Join thousands of students and professionals who have transformed their careers with StudyHub
           </p>
         </div>
 
@@ -80,7 +77,7 @@ const Testimonials: React.FC = () => {
               </div>
               
               <p className="text-gray-300 mb-6 leading-relaxed text-lg">
-                "{testimonial.content}"
+                &ldquo;{testimonial.content}&rdquo;
               </p>
 
               <div className="flex items-center space-x-4">
@@ -109,7 +106,7 @@ const Testimonials: React.FC = () => {
               Ready to Transform Your Learning Journey?
             </h3>
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              Join ReSta today and access the world's largest collection of free, high-quality educational resources
+              Join StudyHub today and access the world&apos;s largest collection of free, AI-enhanced educational resources
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">

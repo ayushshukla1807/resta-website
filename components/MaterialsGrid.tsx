@@ -1,21 +1,8 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { StudyMaterial } from '@/types';
-import { Download, Star, Calendar, User, FileText } from 'lucide-react';
-
-interface MaterialsGridProps {
-  materials: StudyMaterial[];
-}
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  });
-};
-
+import { Download, Star, Calendar, User, FileText, Sparkles } from 'lucide-react';
+import SummaryModal from './SummaryModal';
 import { motion } from 'framer-motion';
 
 const containerVariants = {
@@ -37,8 +24,16 @@ const itemVariants = {
 };
 
 const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
+  const [summaryMaterial, setSummaryMaterial] = useState<any | null>(null);
+
   return (
-    <motion.div 
+    <>
+      <SummaryModal 
+        isOpen={!!summaryMaterial} 
+        onClose={() => setSummaryMaterial(null)} 
+        material={summaryMaterial || { title: '', description: '' }} 
+      />
+      <motion.div 
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -118,14 +113,23 @@ const MaterialsGrid: React.FC<MaterialsGridProps> = ({ materials }) => {
                 </div>
               )}
             </div>
-            <button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
-              <Download className="w-4 h-4" />
-              <span>Download</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setSummaryMaterial(material)}
+                className="bg-white/5 hover:bg-white/10 text-emerald-400 p-2 rounded-lg border border-white/10 transition-all flex items-center gap-2 text-xs font-bold"
+              >
+                <Sparkles className="w-4 h-4" /> AI Summary
+              </button>
+              <button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+                <Download className="w-4 h-4" />
+                <span>Download</span>
+              </button>
+            </div>
           </div>
         </motion.div>
       ))}
     </motion.div>
+    </>
   );
 };
 
